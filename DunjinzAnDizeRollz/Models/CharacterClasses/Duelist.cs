@@ -15,7 +15,7 @@ namespace DunjinzAnDizeRollz.Models.CharacterClasses
         public int DamageReductionBonus { get; set; }
         public int NumberOfAttacksBonus { get; set; }
         public int InitiativeBonus { get; set; }
-        public int WeightCapacity { get; set; }
+        public int WeightCapacityBonus { get; set; }
 
         public Duelist()
         {
@@ -25,7 +25,7 @@ namespace DunjinzAnDizeRollz.Models.CharacterClasses
             DamageReductionBonus = 5;
             NumberOfAttacksBonus = 2;
             InitiativeBonus = 5;
-            WeightCapacity = 120;
+            WeightCapacityBonus = 120;
         }
     }
 }

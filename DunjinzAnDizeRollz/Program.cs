@@ -11,14 +11,17 @@ namespace DunjinzAnDizeRollz
 {
     class Program
     {
-        static Player player = new Player();
+        //static Player player = new Player();
+        static Player player = new Player(new Barbarian(), new BattleAxe(), new Rags());
 
         static void Main(string[] args)
         {
 
-            Intro();
+            //Intro();
 
-            Combat(new Goblin());
+            //Combat(new Goblin());
+
+            Console.WriteLine(PlayerMeleeAttack(new Goblin()));
 
             Console.ReadKey();
         }
@@ -102,18 +105,18 @@ namespace DunjinzAnDizeRollz
         {
             Console.WriteLine($"Before you stands a {creature.Name}!\n\n");
 
-            PlayerMove(new Goblin());
+            Console.WriteLine("********** Roll for initiative **********");
+            Initiative(creature);
+
+            object[] attackQueue
         }
 
         public static Random random = new Random();
 
         private static void Initiative(ICreature creature)
-        {
-            Console.WriteLine("********** Roll for initiative **********");
-
-            
+        {            
             int creatureRoll = random.Next(1, 101) + creature.InitiativeBonus;
-            int playerRoll = random.Next(1, 101) + player.TotalInitiativeBonus;
+            int playerRoll = random.Next(1, 101) + player.InitiativeBonus;
 
             Console.WriteLine($"Creature initiative: {creatureRoll}");
             Console.WriteLine($"Player initiative: {playerRoll}");
@@ -131,11 +134,31 @@ namespace DunjinzAnDizeRollz
             }
         }
 
-        private static void PlayerMove(ICreature creature)
+        private static string PlayerMeleeAttack(ICreature creature)
         {
-            int dmg = random.Next(player.WeaponSlot.MinDamage, player.WeaponSlot.MaxDamage + 1);
-            creature.CurrentHitPoints -= dmg;
-            Console.WriteLine($"Creatue HP: {creature.CurrentHitPoints}");
+            // Roll to hit.
+            DiceRoll diceRoll = new DiceRoll(numberOfDice: 20);
+
+            string output = "";
+
+            foreach (var roll in diceRoll.Results)
+            {
+                if (creature.CurrentHitPoints <= 0)
+                    return output += $"{creature.Name} has been slain.";
+
+                if (!RollCheck(roll, creature.Armour.ArmourBonus))
+                    output += $"{player.Name} has missed.\n";
+                else
+                {
+                    // Roll to damage.
+                    int dmg = random.Next(player.WeaponSlot.MinDamage, player.WeaponSlot.MaxDamage + 1);
+                    output += $"Damage by {player.Name}: {dmg}\n";
+                    creature.CurrentHitPoints -= dmg;
+                }
+            }
+
+            output += $"Creatue HP: {creature.CurrentHitPoints}";
+            return output;
         }
 
         private static void CreatureMove(ICreature creature)
@@ -143,6 +166,11 @@ namespace DunjinzAnDizeRollz
             int dmg = random.Next(creature.WeaponSlot.MinDamage, creature.WeaponSlot.MaxDamage + 1);
             player.CurrentHitPoints -= dmg;
             Console.WriteLine($"Player HP: {player.CurrentHitPoints}");
+        }
+
+        private static bool RollCheck(int score, int againstNumber)
+        {
+            return score >= againstNumber ? true : false;
         }
     }
 }

@@ -3,22 +3,35 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DunjinzAnDizeRollz.Models.Creature;
 using DunjinzAnDizeRollz.Resources;
 
 namespace DunjinzAnDizeRollz.Models
 {
-    public class Player : BasePropertyChanged
+    public class Player : BasePropertyChanged, ICreature
     {
         public string Name { get; set; }
 
         private ICharacterClass characterClass;
+
         public ICharacterClass CharacterClass
         {
             get => characterClass;
+
             set
             {
                 SetProperty(ref characterClass, value);
-                TotalHitPoints = characterClass != null ? TotalHitPoints += characterClass.HitPointBonus : TotalHitPoints;
+
+                // TODO: Add all bonuses for that particular CharacterClass
+                if(characterClass != null)
+                {
+                    TotalHitPoints += characterClass.HitPointBonus;
+                    DefenceBonus += characterClass.DefenceBonus;
+                    DamageReduction += characterClass.DamageReductionBonus;
+                    NumberOfAttacks += characterClass.NumberOfAttacksBonus;
+                    InitiativeBonus += characterClass.InitiativeBonus;
+                    WeightCapacity += characterClass.WeightCapacityBonus;
+                }
             }
         }
 
@@ -27,12 +40,45 @@ namespace DunjinzAnDizeRollz.Models
 
         public int TotalHitPoints { get; set; }
         public int CurrentHitPoints { get; set; }
-
+        public int MinDamage { get; set; }
+        public int MaxDamage { get; set; }
+        public int DefenceBonus { get; set; }
+        public int DamageBonus { get; set; }
+        public int DamageReduction { get; set; }
+        public int NumberOfAttacks { get; set; }
         // TODO: Add up initiative from class and any other items or abilities that may increase initiative.
-        public int TotalInitiativeBonus { get; set; }
+        public int InitiativeBonus { get; set; }
+        public int WeightCapacity { get; set; }
 
-        public IWeapon WeaponSlot { get; set; }
-        public IArmour Armour { get; set; }
+        private IWeapon weaponSlot;
+
+        public IWeapon WeaponSlot 
+        { 
+            get => weaponSlot; set
+            {
+                SetProperty(ref weaponSlot, value);
+
+                if (weaponSlot != null)
+                {
+                    MinDamage += weaponSlot.MinDamage;
+                    MaxDamage += weaponSlot.MaxDamage;
+                }
+            }
+        }
+
+        private IArmour armour;
+
+        public IArmour Armour 
+        { 
+            get => armour;
+            set
+            {
+                SetProperty(ref armour, value);
+
+                if (armour != null)
+                    DefenceBonus += armour.ArmourBonus;
+            } 
+        }
         public int Gold { get; set; }
 
         public Player()
@@ -41,6 +87,19 @@ namespace DunjinzAnDizeRollz.Models
             Level = 1;
             TotalHitPoints = 100;
             Gold = 0;
+        }
+
+        // An instantiation of the player currently used for testing.
+        public Player(ICharacterClass characterClass, IWeapon weapon, IArmour armour)
+        {
+            Name = "Player1";
+            Experience = 0;
+            Level = 1;
+            TotalHitPoints = 100;
+            Gold = 0;
+            CharacterClass = characterClass;
+            WeaponSlot = weapon;
+            Armour = armour;
         }
 
         public override string ToString()

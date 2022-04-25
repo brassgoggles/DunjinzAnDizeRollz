@@ -15,7 +15,7 @@ namespace DunjinzAnDizeRollz.Models
         public int DamageReductionBonus { get; set; }
         public int NumberOfAttacksBonus { get; set; }
         public int InitiativeBonus { get; set; }
-        public int WeightCapacity { get; set; }
+        public int WeightCapacityBonus { get; set; }
 
         public Barbarian()
         {
@@ -25,7 +25,7 @@ namespace DunjinzAnDizeRollz.Models
             DamageReductionBonus = 20;
             NumberOfAttacksBonus = 1;
             InitiativeBonus = 0;
-            WeightCapacity = 140;
+            WeightCapacityBonus = 140;
         }
     }
 }

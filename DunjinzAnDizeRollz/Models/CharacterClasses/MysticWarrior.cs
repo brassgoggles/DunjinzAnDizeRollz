@@ -15,7 +15,7 @@ namespace DunjinzAnDizeRollz.Models.CharacterClasses
         public int DamageReductionBonus { get; set; }
         public int NumberOfAttacksBonus { get; set; }
         public int InitiativeBonus { get; set; }
-        public int WeightCapacity { get; set; }
+        public int WeightCapacityBonus { get; set; }
 
         public MysticWarrior()
         {
@@ -24,7 +24,7 @@ namespace DunjinzAnDizeRollz.Models.CharacterClasses
             DefenceBonus = 0;
             DamageReductionBonus = 0;
             NumberOfAttacksBonus = 0;
-            WeightCapacity = 100;
+            WeightCapacityBonus = 100;
         }
     }
 }

@@ -15,6 +15,6 @@ namespace DunjinzAnDizeRollz.Models
         public int DamageReductionBonus { get; set; }
         public int NumberOfAttacksBonus { get; set; }
         public int InitiativeBonus { get; set; }
-        public int WeightCapacity { get; set; }
+        public int WeightCapacityBonus { get; set; }
     }
 }
