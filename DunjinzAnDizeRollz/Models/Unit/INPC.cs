@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DunjinzAnDizeRollz.Models.Creature
+namespace DunjinzAnDizeRollz.Models.Units
 {
     public interface INPC
     {

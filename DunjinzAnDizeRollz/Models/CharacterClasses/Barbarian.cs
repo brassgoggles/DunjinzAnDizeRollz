@@ -4,28 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DunjinzAnDizeRollz.Models
+namespace DunjinzAnDizeRollz.Models.CharacterClasses
 {
-    public class Barbarian : ICharacterClass
+    public class Barbarian : BaseCharacterClass
     {
-        public string Name { get; set; }
-        public int HitPointBonus { get; set; }
-        public int DefenceBonus { get; set; }
-        public int DamageBonus { get; set; }
-        public int DamageReductionBonus { get; set; }
-        public int NumberOfAttacksBonus { get; set; }
-        public int InitiativeBonus { get; set; }
-        public int WeightCapacityBonus { get; set; }
-
         public Barbarian()
         {
-            Name = "Barbarian";
+            ClassName = "Barbarian";
             HitPointBonus = 30;
             DefenceBonus = 10;
+            MinDamageBonus = 0;
+            MaxDamageBonus = 0;
             DamageReductionBonus = 20;
-            NumberOfAttacksBonus = 1;
+            NumberOfMeleeAttacksBonus = 1;
             InitiativeBonus = 0;
-            WeightCapacityBonus = 140;
+            WeightCapacityBonus = 40;
         }
     }
 }

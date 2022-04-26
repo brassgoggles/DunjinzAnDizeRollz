@@ -1,9 +1,11 @@
 ﻿using DunjinzAnDizeRollz.Models;
 using DunjinzAnDizeRollz.Models.CharacterClasses;
-using DunjinzAnDizeRollz.Models.Creature;
 using DunjinzAnDizeRollz.Models.Equipment;
 using DunjinzAnDizeRollz.Models.Equipment.Armour;
 using DunjinzAnDizeRollz.Models.Equipment.Weapons;
+using DunjinzAnDizeRollz.Models.Races;
+using DunjinzAnDizeRollz.Models.Units;
+using DunjinzAnDizeRollz.Resources;
 using System;
 using System.Collections.Generic;
 
@@ -11,17 +13,17 @@ namespace DunjinzAnDizeRollz
 {
     class Program
     {
-        //static Player player = new Player();
-        static Player player = new Player(new Barbarian(), new BattleAxe(), new Rags());
+        //static Player player = new Player(new Barbarian(), new BattleAxe(), new Rags());
+
+        static Player player = new Player("Player1", new Human(), new Barbarian(), 0, 0,
+            baseNumberOfMeleeAttacks: 1, weaponSlot: new BattleAxe());
 
         static void Main(string[] args)
         {
 
             //Intro();
 
-            //Combat(new Goblin());
-
-            Console.WriteLine(PlayerMeleeAttack(new Goblin()));
+            Combat(new GoblinWretch(new Goblin(), new Barbarian(), baseHitPoints: 100));
 
             Console.ReadKey();
         }
@@ -53,7 +55,7 @@ namespace DunjinzAnDizeRollz
                 "as you stand before your opponent.\n\n");
         }
 
-        private static ICharacterClass SelectClass()
+        private static BaseCharacterClass SelectClass()
         {
             Console.WriteLine("[Press a number to select from the following]\n" +
                 "1 - [Barbarian] I see an enemy, I hit an enemy!\n" +
@@ -101,76 +103,64 @@ namespace DunjinzAnDizeRollz
         }
         #endregion
 
-        private static void Combat(ICreature creature)
+        #region Combat
+        public static bool continueCombat = true;
+
+        private static void Combat(BaseUnit opponent)
         {
-            Console.WriteLine($"Before you stands a {creature.Name}!\n\n");
+            Console.WriteLine($"Before you stands a {opponent.Name}!\n\n");
 
-            Console.WriteLine("********** Roll for initiative **********");
-            Initiative(creature);
+            int i = 1;
 
-            object[] attackQueue
+            while (continueCombat)
+            {
+                Console.WriteLine($"*************** Round {i} ***************");
+                Console.WriteLine("***** Roll for initiative *****");
+                List<BaseUnit> attackQueue = Initiative(opponent);
+                CommonFunctions.ProceedStory();
+
+                foreach (var unit in attackQueue)
+                {
+                    continueCombat = unit.Tag == "player" ? unit.ActionTurn(player) : unit.ActionTurn(opponent);
+                }
+                i++;
+            }
         }
 
         public static Random random = new Random();
 
-        private static void Initiative(ICreature creature)
-        {            
-            int creatureRoll = random.Next(1, 101) + creature.InitiativeBonus;
-            int playerRoll = random.Next(1, 101) + player.InitiativeBonus;
-
-            Console.WriteLine($"Creature initiative: {creatureRoll}");
-            Console.WriteLine($"Player initiative: {playerRoll}");
-            
-
-            // Player goes first by default.
-
-            if(playerRoll < creatureRoll)
-            {
-                // Player goes second.
-            }
-            else if(playerRoll == creatureRoll)
-            {
-                // Trigger reroll
-            }
-        }
-
-        private static string PlayerMeleeAttack(ICreature creature)
+        private static List<BaseUnit> Initiative(BaseUnit opponent)
         {
-            // Roll to hit.
-            DiceRoll diceRoll = new DiceRoll(numberOfDice: 20);
+            int opponentRoll = random.Next(1, 101) + opponent.TotalInitiative;
+            int playerRoll = random.Next(1, 101) + player.TotalInitiative;
 
-            string output = "";
+            Console.WriteLine($"Opponent initiative: {opponentRoll}");
+            Console.WriteLine($"Player initiative: {playerRoll}\n\n");
 
-            foreach (var roll in diceRoll.Results)
+            if (playerRoll > opponentRoll)
             {
-                if (creature.CurrentHitPoints <= 0)
-                    return output += $"{creature.Name} has been slain.";
-
-                if (!RollCheck(roll, creature.Armour.ArmourBonus))
-                    output += $"{player.Name} has missed.\n";
-                else
+                // Player goes first.
+                return new List<BaseUnit>()
                 {
-                    // Roll to damage.
-                    int dmg = random.Next(player.WeaponSlot.MinDamage, player.WeaponSlot.MaxDamage + 1);
-                    output += $"Damage by {player.Name}: {dmg}\n";
-                    creature.CurrentHitPoints -= dmg;
-                }
+                    player,
+                    opponent
+                };
             }
-
-            output += $"Creatue HP: {creature.CurrentHitPoints}";
-            return output;
+            else if (playerRoll < opponentRoll)
+            {
+                // Opponent goes first.
+                return new List<BaseUnit>()
+                {
+                    opponent,
+                    player
+                };
+            }
+            else
+            {
+                // Both have same initiative, trigger reroll.
+                return Initiative(opponent);
+            }
         }
-
-        private static void CreatureMove(ICreature creature)
-        {
-            int dmg = random.Next(creature.WeaponSlot.MinDamage, creature.WeaponSlot.MaxDamage + 1);
-            player.CurrentHitPoints -= dmg;
-            Console.WriteLine($"Player HP: {player.CurrentHitPoints}");
-        }
-
-        private static bool RollCheck(int score, int againstNumber)
-        {
-            return score >= againstNumber ? true : false;
-        }
+        #endregion
     }
 }

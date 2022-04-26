@@ -11,18 +11,29 @@ namespace DunjinzAnDizeRollz.Models.Equipment.Weapons
         public string Name { get; set; }
         public int Weight { get; set; }
         public EquipmentType Type { get; set; }
+        public int HitPointBonus { get; set; }
+        public int DefenceBonus { get; set; }
+        public int MinDamageBonus { get; set; }
+        public int MaxDamageBonus { get; set; }
+        public int DamageReductionBonus { get; set; }
+        public int NumberOfMeleeAttacksBonus { get; set; }
+        public int InitiativeBonus { get; set; }
+        public int WeightCapacityBonus { get; set; }
 
-        public int NumberOfAttacks { get; set; }
-        public int MinDamage { get; set; }
-        public int MaxDamage { get; set; }
-
+        // Basic version of weapon.
         public Dagger()
         {
             Name = "Dagger";
-            Weight = 2;
-            NumberOfAttacks = 2;
-            MinDamage = 1;
-            MaxDamage = 5;
+            Weight = 3;
+            Type = EquipmentType.Weapon;
+            HitPointBonus = 0;
+            DefenceBonus = 0;
+            MinDamageBonus = 1;
+            MaxDamageBonus = 5;
+            DamageReductionBonus = 0;
+            NumberOfMeleeAttacksBonus = 3;
+            InitiativeBonus = 10;
+            WeightCapacityBonus = 0;
         }
     }
 }

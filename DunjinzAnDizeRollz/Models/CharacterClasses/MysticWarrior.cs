@@ -6,25 +6,19 @@ using System.Threading.Tasks;
 
 namespace DunjinzAnDizeRollz.Models.CharacterClasses
 {
-    public class MysticWarrior : ICharacterClass
+    public class MysticWarrior : BaseCharacterClass
     {
-        public string Name { get; set; }
-        public int HitPointBonus { get; set; }
-        public int DefenceBonus { get; set; }
-        public int DamageBonus { get; set; }
-        public int DamageReductionBonus { get; set; }
-        public int NumberOfAttacksBonus { get; set; }
-        public int InitiativeBonus { get; set; }
-        public int WeightCapacityBonus { get; set; }
-
         public MysticWarrior()
         {
-            Name = "Mystic Warrior";
+            ClassName = "Mystic Warrior";
             HitPointBonus = 0;
             DefenceBonus = 0;
+            MinDamageBonus = 0;
+            MaxDamageBonus = 0;
             DamageReductionBonus = 0;
-            NumberOfAttacksBonus = 0;
-            WeightCapacityBonus = 100;
+            NumberOfMeleeAttacksBonus = 0;
+            InitiativeBonus = 10;
+            WeightCapacityBonus = 0;
         }
     }
 }

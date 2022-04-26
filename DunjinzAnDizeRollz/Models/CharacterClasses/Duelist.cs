@@ -6,26 +6,19 @@ using System.Threading.Tasks;
 
 namespace DunjinzAnDizeRollz.Models.CharacterClasses
 {
-    public class Duelist : ICharacterClass
+    public class Duelist : BaseCharacterClass
     {
-        public string Name { get; set; }
-        public int HitPointBonus { get; set; }
-        public int DefenceBonus { get; set; }
-        public int DamageBonus { get; set; }
-        public int DamageReductionBonus { get; set; }
-        public int NumberOfAttacksBonus { get; set; }
-        public int InitiativeBonus { get; set; }
-        public int WeightCapacityBonus { get; set; }
-
         public Duelist()
         {
-            Name = "Duelist";
+            ClassName = "Duelist";
             HitPointBonus = 15;
             DefenceBonus = 5;
+            MinDamageBonus = 0;
+            MaxDamageBonus = 0;
             DamageReductionBonus = 5;
-            NumberOfAttacksBonus = 2;
-            InitiativeBonus = 5;
-            WeightCapacityBonus = 120;
+            NumberOfMeleeAttacksBonus = 2;
+            InitiativeBonus = 30;
+            WeightCapacityBonus = 15;
         }
     }
 }

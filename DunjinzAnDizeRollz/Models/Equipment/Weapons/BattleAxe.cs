@@ -4,25 +4,36 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DunjinzAnDizeRollz.Models.Equipment
+namespace DunjinzAnDizeRollz.Models.Equipment.Weapons
 {
     public class BattleAxe : IWeapon
     {
         public string Name { get; set; }
         public int Weight { get; set; }
         public EquipmentType Type { get; set; }
+        public int HitPointBonus { get; set; }
+        public int DefenceBonus { get; set; }
+        public int MinDamageBonus { get; set; }
+        public int MaxDamageBonus { get; set; }
+        public int DamageReductionBonus { get; set; }
+        public int NumberOfMeleeAttacksBonus { get; set; }
+        public int InitiativeBonus { get; set; }
+        public int WeightCapacityBonus { get; set; }
 
-        public int NumberOfAttacks { get; set; }
-        public int MinDamage { get; set; }
-        public int MaxDamage { get; set; }        
-
+        // Basic version of weapon.
         public BattleAxe()
         {
             Name = "Battle Axe";
             Weight = 20;
-            NumberOfAttacks = 1;
-            MinDamage = 10;
-            MaxDamage = 20;
+            Type = EquipmentType.Weapon;
+            HitPointBonus = 0;
+            DefenceBonus = 0;
+            MinDamageBonus = 10;
+            MaxDamageBonus = 20;
+            DamageReductionBonus = 0;
+            NumberOfMeleeAttacksBonus = 1;
+            InitiativeBonus = 5;
+            WeightCapacityBonus = 0;
         }
     }
 }
