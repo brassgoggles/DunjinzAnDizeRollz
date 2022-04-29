@@ -53,10 +53,5 @@ namespace DunjinzAnDizeRollz.Models.Units
             WeaponSlot = weaponSlot;
             Armour = armour;
         }
-
-        public override bool ActionTurn(BaseUnit opponent)
-        {
-            return MeleeAttack(opponent);
-        }
     }
 }

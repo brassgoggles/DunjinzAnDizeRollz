@@ -8,5 +8,6 @@ namespace DunjinzAnDizeRollz.Models.Races
 {
     public class Goblin : BaseRace
     {
+        // TODO: Add modifiers and abilities for this race.
     }
 }

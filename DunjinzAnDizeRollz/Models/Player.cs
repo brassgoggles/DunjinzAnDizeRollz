@@ -24,7 +24,7 @@ namespace DunjinzAnDizeRollz.Models
                       int gold,
                       string tag = "player",
                       int level = 1,
-                        int baseHitPoints = 10,
+                        int baseHitPoints = 100,
                         int baseMinDamage = 1,
                         int baseMaxDamage = 1,
                         int baseDefence = 25,
@@ -66,65 +66,5 @@ namespace DunjinzAnDizeRollz.Models
                 $"Armour: {Armour?.Name}\n" +
                 $"Gold: {Gold}\n\n";
         }
-
-        public override bool ActionTurn(BaseUnit opponent)
-        {
-            // Show menu with choices.
-            //  - Melee attack
-            //  - Cast spell
-            //  - Use ability
-            //  - Drink potion
-
-            // TODO: Update the menu and the actions that follow.
-            Console.WriteLine("---------------------- MENU ----------------------\n" +
-                "[Press a number to select from the following]\n" +
-                "1 - Melee attack\n" +
-                "2 - Do nothing\n" +
-                "--------------------------------------------------\n\n");
-
-            string selection = Console.ReadLine();
-
-            if (selection == "1")
-            {
-                return MeleeAttack(opponent);
-            }
-            return MeleeAttack(opponent);
-        }
-
-        //public override bool MeleeAttack(BaseUnit opponent)
-        //{
-        //    Random random = new Random();
-
-        //    // Roll to hit.
-        //    DiceRoll diceRoll = new DiceRoll(numberOfDice: TotalNumberOfMeleeAttacks);
-
-        //    int i = 1;
-
-        //    foreach (var roll in diceRoll.Results)
-        //    {
-        //        Console.WriteLine($"***** {Name} attack roll {i} *****\n" +
-        //            $"{roll} vs {opponent.Name} defence: {opponent.TotalDefence}");
-
-        //        if (opponent.CurrentHitPoints <= 0)
-        //        {
-        //            Console.WriteLine($"{opponent.Name} has been slain.");
-        //            return false;
-        //        }                    
-
-        //        if (!CommonFunctions.RollCheck(roll, opponent.TotalDefence))
-        //            Console.WriteLine($"{Name} has missed.");
-        //        else
-        //        {
-        //            // Roll to damage.
-        //            int dmg = random.Next(TotalMinDamage, TotalMaxDamage + 1);
-        //            Console.WriteLine($"Damage by {Name}: {dmg}");
-        //            opponent.CurrentHitPoints -= dmg;
-        //        }
-        //        i++;
-        //        Console.WriteLine($"Opponent HP: {opponent.CurrentHitPoints}\n\n\n");
-        //        CommonFunctions.ProceedStory();
-        //    }
-        //    return true;
-        //}
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DunjinzAnDizeRollz.Models.CharacterClasses
 {
-    public abstract class BaseCharacterClass : ICharacteristicBonuses
+    public class BaseCharacterClass : ICharacteristicBonuses
     {    
         public string ClassName { get; set; }
         public int HitPointBonus { get; set; }
@@ -17,5 +17,8 @@ namespace DunjinzAnDizeRollz.Models.CharacterClasses
         public int NumberOfMeleeAttacksBonus { get; set; }
         public int InitiativeBonus { get; set; }
         public int WeightCapacityBonus { get; set; }
+
+        // Constructor can be used to generate basic NPC CharacterClass.
+        public BaseCharacterClass() { ClassName = "BaseClass"; }
     }
 }

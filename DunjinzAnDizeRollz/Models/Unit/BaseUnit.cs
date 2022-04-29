@@ -3,6 +3,7 @@ using DunjinzAnDizeRollz.Models.Equipment.Armour;
 using DunjinzAnDizeRollz.Models.Equipment.Weapons;
 using DunjinzAnDizeRollz.Models.Races;
 using DunjinzAnDizeRollz.Resources;
+using DunjinzAnDizeRollz.Scenes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -237,6 +238,8 @@ namespace DunjinzAnDizeRollz.Models.Units
         }
 
         #region Apply bonuses
+        // Apply any bonuses added for characteristics such as
+        // race, class, weapons and equipment.
         private void ApplyBonuses()
         {
             ApplyHitPointBonuses();
@@ -322,10 +325,12 @@ namespace DunjinzAnDizeRollz.Models.Units
         }
         #endregion
 
-        public abstract bool ActionTurn(BaseUnit opponent);
+        //public abstract bool ActionTurn(BaseUnit opponent);
 
-        public bool MeleeAttack(BaseUnit opponent)
+        public CombatAction MeleeAttack(BaseUnit opponent)
         {
+            CombatAction combatAction = new();
+
             Random random = new Random();
 
             // Roll to hit.
@@ -335,29 +340,34 @@ namespace DunjinzAnDizeRollz.Models.Units
 
             foreach (var roll in diceRoll.Results)
             {
+                int damage = 0;
+
                 Console.WriteLine($"***** {Name} attack roll {i} *****\n" +
                     $"{roll} vs {opponent.Name} defence: {opponent.TotalDefence}");
-
-                if (opponent.CurrentHitPoints <= 0)
-                {
-                    Console.WriteLine($"{opponent.Name} has been slain.");
-                    return false;
-                }
 
                 if (!CommonFunctions.RollCheck(roll, opponent.TotalDefence))
                     Console.WriteLine($"{Name} has missed.");
                 else
                 {
                     // Roll to damage.
-                    int dmg = random.Next(TotalMinDamage, TotalMaxDamage + 1);
-                    Console.WriteLine($"Damage by {Name}: {dmg}");
-                    opponent.CurrentHitPoints -= dmg;
+                    damage = random.Next(TotalMinDamage, TotalMaxDamage + 1);
+
+                    // Reduce damage from DamageReduction characteristic.
+                    // Min damage is dealt can't be less than 1.
+                    if ((damage - opponent.TotalDamageReduction) > 0)
+                        damage -= opponent.TotalDamageReduction;
+                    else
+                        damage = 1;
+
+                    combatAction.DamageDealt += damage;
+
+                    Console.WriteLine($"Attack {i} damages {opponent.Name}: {damage}");
                 }
                 i++;
-                Console.WriteLine($"Opponent HP: {opponent.CurrentHitPoints}\n\n\n");
                 CommonFunctions.ProceedStory();
             }
-            return true;
+            Console.WriteLine($"{Name} total damage to {opponent.Name}: {combatAction.DamageDealt}\n\n");
+            return combatAction;
         }
     }
 }

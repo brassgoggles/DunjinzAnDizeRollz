@@ -12,7 +12,7 @@ namespace DunjinzAnDizeRollz.Models.CharacterClasses
         {
             ClassName = "Duelist";
             HitPointBonus = 15;
-            DefenceBonus = 5;
+            DefenceBonus = 500;//5 *************************
             MinDamageBonus = 0;
             MaxDamageBonus = 0;
             DamageReductionBonus = 5;
