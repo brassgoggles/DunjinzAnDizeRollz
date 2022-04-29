@@ -8,6 +8,7 @@ namespace DunjinzAnDizeRollz.Models.CharacterClasses
 {
     public class MysticWarrior : BaseCharacterClass
     {
+        // TODO: Implement MysticWarrior abilities.
         public MysticWarrior()
         {
             ClassName = "Mystic Warrior";

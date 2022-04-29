@@ -10,5 +10,6 @@ namespace DunjinzAnDizeRollz.Models.Units
     {
         public int ExperienceValue { get; set; }
         public int RewardLevel { get; set; }
+        public int NPCRank { get; set; }
     }
 }

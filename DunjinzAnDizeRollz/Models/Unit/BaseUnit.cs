@@ -204,39 +204,6 @@ namespace DunjinzAnDizeRollz.Models.Units
         } 
         #endregion
 
-        public BaseUnit(string name,
-                        string tag,
-                        BaseRace race,
-                        BaseCharacterClass characterClass,
-                        int level = 1,
-                        int baseHitPoints = 10,
-                        int baseMinDamage = 1,
-                        int baseMaxDamage = 1,
-                        int baseDefence = 25,
-                        int baseDamageReduction = 0,
-                        int baseNumberOfMeleeAttacks = 1,
-                        int baseInitiative = 0,
-                        int baseWeightCapacity = 0,
-                        IWeapon weaponSlot = null,
-                        IArmour armour = null)
-        {
-            Name = name;
-            Race = race;
-            CharacterClass = characterClass;
-            Level = level;
-            BaseHitPoints = baseHitPoints;
-            CurrentHitPoints = baseHitPoints;
-            BaseMinDamage = baseMinDamage;
-            BaseMaxDamage = baseMaxDamage;
-            BaseDefence = baseDefence;
-            BaseDamageReduction = baseDamageReduction;
-            BaseNumberOfMeleeAttacks = baseNumberOfMeleeAttacks;
-            BaseInitiative = baseInitiative;
-            BaseWeightCapacity = baseWeightCapacity;
-            WeaponSlot = weaponSlot;
-            Armour = armour;
-        }
-
         #region Apply bonuses
         // Apply any bonuses added for characteristics such as
         // race, class, weapons and equipment.
@@ -325,8 +292,6 @@ namespace DunjinzAnDizeRollz.Models.Units
         }
         #endregion
 
-        //public abstract bool ActionTurn(BaseUnit opponent);
-
         public CombatAction MeleeAttack(BaseUnit opponent)
         {
             CombatAction combatAction = new();
@@ -366,7 +331,6 @@ namespace DunjinzAnDizeRollz.Models.Units
                 i++;
                 CommonFunctions.ProceedStory();
             }
-            Console.WriteLine($"{Name} total damage to {opponent.Name}: {combatAction.DamageDealt}\n\n");
             return combatAction;
         }
     }

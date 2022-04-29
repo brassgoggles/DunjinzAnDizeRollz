@@ -17,24 +17,24 @@ namespace DunjinzAnDizeRollz.Models
         public int Experience { get; set; }
         public int Gold { get; set; }
 
-        public Player(string name,
-                      BaseRace race,
-                      BaseCharacterClass characterClass,
-                      int experience,
-                      int gold,
-                      string tag = "player",
-                      int level = 1,
-                        int baseHitPoints = 100,
-                        int baseMinDamage = 1,
-                        int baseMaxDamage = 1,
-                        int baseDefence = 25,
-                        int baseDamageReduction = 0,
-                        int baseNumberOfMeleeAttacks = 1,
-                        int baseInitiative = 0,
-                        int baseWeightCapacity = 0,
-                        IWeapon weaponSlot = null,
-                        IArmour armour = null) :
-            base(name, tag, race, characterClass)
+        public Player(
+                    string name,
+                    BaseRace race,
+                    BaseCharacterClass characterClass,
+                    int experience,
+                    int gold,
+                    string tag = "player",
+                    int level = 1,
+                    int baseHitPoints = 100,
+                    int baseMinDamage = 1,
+                    int baseMaxDamage = 1,
+                    int baseDefence = 25,
+                    int baseDamageReduction = 0,
+                    int baseNumberOfMeleeAttacks = 1,
+                    int baseInitiative = 0,
+                    int baseWeightCapacity = 0,
+                    IWeapon weaponSlot = null,
+                    IArmour armour = null)
         {
             Name = name;
             Tag = tag;

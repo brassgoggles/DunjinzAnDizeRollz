@@ -12,15 +12,19 @@ namespace DunjinzAnDizeRollz.Scenes
 {
     public static class MainMenu
     {
-        public static void InitiateMainMenu()
+        public static bool InitiateMainMenu()
         {
+            Program.GameController = GameState.MainMenu;
+
             List<Option> menuOptions = new List<Option>()
             {
-                new Option("Choose next opponent", () => new Combat(new GoblinWretch(new Goblin(), new BaseCharacterClass(), baseHitPoints: 50))),
-                new Option("Exit", () => { Environment.Exit(0); return null; })
+                new Option("Choose next opponent", () => { ChooseOpponentMenu.InitiateMenu(); return null; }),
+                new Option("Exit", () => { Environment.Exit(0); return false; })
             };
 
             Menu mainMenu = new("MAIN MENU", menuOptions);
+
+            return false;
         }
     }
 }

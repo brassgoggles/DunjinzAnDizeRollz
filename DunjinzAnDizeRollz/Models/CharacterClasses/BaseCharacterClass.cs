@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DunjinzAnDizeRollz.Scenes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,7 +19,9 @@ namespace DunjinzAnDizeRollz.Models.CharacterClasses
         public int InitiativeBonus { get; set; }
         public int WeightCapacityBonus { get; set; }
 
+        public List<CombatAction> ClassAbilities { get; set; }
+
         // Constructor can be used to generate basic NPC CharacterClass.
-        public BaseCharacterClass() { ClassName = "BaseClass"; }
+        public BaseCharacterClass() { ClassName = ""; }
     }
 }

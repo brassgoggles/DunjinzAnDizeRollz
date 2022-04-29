@@ -11,12 +11,12 @@ namespace DunjinzAnDizeRollz.Scenes
 {
     public class Combat
     {
-        public bool ContinueCombat { get; set; }
+        public bool continueCombat { get; set; }
         public BaseUnit Opponent { get; set; }
 
         public Combat(BaseUnit opponent)
         {
-            ContinueCombat = true;
+            continueCombat = true;
             Opponent = opponent;
 
             InitiateCombat();
@@ -29,7 +29,7 @@ namespace DunjinzAnDizeRollz.Scenes
 
             int i = 1;
 
-            while (ContinueCombat)
+            while (continueCombat)
             {
                 Console.WriteLine($"*************** Round {i} ***************");
                 Console.WriteLine("***** Roll for initiative *****");
@@ -43,8 +43,9 @@ namespace DunjinzAnDizeRollz.Scenes
                     if(unit.Tag == "player")
                     {
                         // Player gets to choose from a menu.
-                        combatAction = PlayerComabatMenu();
+                        combatAction = PlayerCombatMenu();
                         CombatActionResultModifiers(combatAction, Program.player, Opponent);
+                        Console.WriteLine($"{Opponent.Name} HP remaining: {Opponent.CurrentHitPoints}\n\n");
                     }
                     else
                     {
@@ -54,11 +55,16 @@ namespace DunjinzAnDizeRollz.Scenes
                     }
 
                     if (Program.player.CurrentHitPoints <= 0)
+                    {
                         PlayerDeath();
+                        //continueCombat = false;
+                        return null;
+                    }
 
                     if (Opponent.CurrentHitPoints <= 0)
                     {
                         OpponentDeath();
+                        //continueCombat = false;
                         return null;
                     }
                 }
@@ -68,12 +74,15 @@ namespace DunjinzAnDizeRollz.Scenes
         }
 
         private void CombatActionResultModifiers(CombatAction combatAction, 
-            BaseUnit unit, BaseUnit opponent)
+            BaseUnit activeUnit, BaseUnit opponent)
         {
-            unit.CurrentHitPoints -= combatAction.DamageDealt;
-            unit.CurrentHitPoints += combatAction.HealthRecovered;
+            activeUnit.CurrentHitPoints -= combatAction.DamageTaken;
+            activeUnit.CurrentHitPoints += combatAction.HealthRecovered;
 
             opponent.CurrentHitPoints -= combatAction.DamageDealt;
+
+            Console.WriteLine($"{activeUnit.Name} total damage to {opponent.Name}: {combatAction.DamageDealt}\n" +
+                $"{opponent.Name} total HP remaining: {opponent.CurrentHitPoints}\n\n");
         }
 
         private void PlayerDeath()
@@ -81,7 +90,7 @@ namespace DunjinzAnDizeRollz.Scenes
             Console.WriteLine("You have been slain.\n\n");
 
             // TODO: Penalty for dieing.
-            Console.WriteLine("!!!!! PENALTY FOR DIEING NOT YET IMPLEMENTED !!!!!");
+            Console.WriteLine("!!!!! PENALTY FOR DIEING NOT YET IMPLEMENTED !!!!!\n\n");
         }
 
         private void OpponentDeath()
@@ -89,10 +98,10 @@ namespace DunjinzAnDizeRollz.Scenes
             Console.WriteLine($"{Opponent.Name} has been slain.\n\n");
 
             // TODO: EXP and Treasure rewards.
-            Console.WriteLine("!!!!! REWARDS NOT YET IMPLEMENTED !!!!!");
+            Console.WriteLine("!!!!! REWARDS NOT YET IMPLEMENTED !!!!!\n\n");
         }
 
-        private CombatAction PlayerComabatMenu()
+        private CombatAction PlayerCombatMenu()
         {
             CombatAction combatAction = new();
 
@@ -142,18 +151,5 @@ namespace DunjinzAnDizeRollz.Scenes
                 return Initiative(opponent);
             }
         }
-    }
-
-    public class CombatAction
-    {
-        // The CombatAction class can be used to return a variety of different
-        // results from a combat action such as melee attack, spell or potion consumed.
-
-        public int DamageDealt { get; set; }
-        public int DamageTaken { get; set; }
-        public int HealthRecovered { get; set; }
-        // TODO: Add other actions for example "DefenceBonusRecieved"
-
-        public CombatAction() { }
     }
 }

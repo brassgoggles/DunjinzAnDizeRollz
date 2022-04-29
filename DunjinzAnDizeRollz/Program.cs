@@ -14,14 +14,28 @@ namespace DunjinzAnDizeRollz
 {
     class Program
     {
-        public static Player player = new Player("Player1", new Human(), new Duelist(), 0, 0,
-            baseNumberOfMeleeAttacks: 1, weaponSlot: new BattleAxe());
+        public static GameState GameController = GameState.MainMenu;
+
+        // Base player mainly for testing, is overriden during Intro.
+        public static Player player = new Player("Player1", new Human(),
+            new Barbarian(), 0, 0, weaponSlot: new BattleAxe());
 
         static void Main(string[] args)
         {
-            //Intro();
-            MainMenu.InitiateMainMenu();
+            Intro.InitiateIntro();
+            while (GameController != GameState.GameOver)
+            {
+                MainMenu.InitiateMainMenu(); 
+            }
+
             Console.ReadKey();
         }
+    }
+
+    public enum GameState
+    {
+        MainMenu,
+        CombatMenu,
+        GameOver
     }
 }

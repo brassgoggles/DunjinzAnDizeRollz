@@ -1,6 +1,7 @@
 ﻿using DunjinzAnDizeRollz.Models.CharacterClasses;
 using DunjinzAnDizeRollz.Models.Equipment.Armour;
 using DunjinzAnDizeRollz.Models.Equipment.Weapons;
+using DunjinzAnDizeRollz.Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace DunjinzAnDizeRollz.Scenes
 {
     public static class Intro
     {
-        private static void InitiateIntro()
+        public static void InitiateIntro()
         {
             Console.WriteLine("You awake to find yourself caged in a holding room just outside " +
                 "of an arena.\n\n" +
@@ -30,11 +31,13 @@ namespace DunjinzAnDizeRollz.Scenes
 
             EquipPlayer();
 
-            Console.WriteLine("The guard smirks a little, 'Alright, time to get in there " +
+            Console.WriteLine("The guard smirks a little, 'Alright, time to get in there \n" +
                 "and fight... or die, I don't care.\n\n" +
-                "The gate to the arena clatters as it opens upwards. The guards push you " +
-                "through and into the bright light of the open arena. The crowd jeers " +
+                "The gate to the arena clatters as it opens upwards. The guards push you \n" +
+                "through and into the bright light of the open arena. The crowd jeers \n" +
                 "as you stand before your opponent.\n\n");
+
+            CommonFunctions.ProceedStory();
         }
 
         private static BaseCharacterClass SelectClass()

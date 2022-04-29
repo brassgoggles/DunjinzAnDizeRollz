@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DunjinzAnDizeRollz.Models.Races
 {
-    public class Human : BaseRace
+    public class Orc : BaseRace
     {
         // TODO: Add modifiers and abilities for this race.
     }
